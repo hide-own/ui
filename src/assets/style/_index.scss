@@ -1,0 +1,244 @@
+$fontSize: 12px;
+$weight: 200;
+$borderRadius: 3px;
+$elevated-default: 0 0 1px rgba(0, 0, 0, 0.3), 0 4px 14px rgba(0, 0, 0, 0.1);
+$elevated-dark: inset 0 0 0 1px rgba(255, 255, 255, 0.1),
+  0 4px 14px rgba(0, 0, 0, 0.25);
+$height-control: 24px;
+$width-icon: 8px;
+$spacing: 2px;
+
+@use "theme" with (
+  $separator: "-",
+  $themes: (
+    "default": (
+      "foreground": #1c1f23,
+      "background": #ffffff,
+      // 主要颜色
+      "primary":
+        (
+          "color": #0064fa,
+          "color-hover": #0062d6,
+          "color-active": #004fb3,
+          "color-disabled": #98cdfd,
+        ),
+      // 次要颜色
+      "secondary":
+        (
+          "color": #0095ee,
+          "color-hover": #007bca,
+          "color-active": #0063a7,
+          "color-disabled": #95d8f8,
+        ),
+      // 第三方颜色
+      "tertiary":
+        (
+          "color": #6b7075,
+          "color-hover": #555b61,
+          "color-active": #41464c,
+          "color-disabled": #f9f9f9,
+        ),
+      // 信息
+      "info":
+        (
+          "color": #0064fa,
+          "color-hover": #0062d6,
+          "color-active": #004fb3,
+          "color-disabled": #98cdfd,
+        ),
+      // 成功
+      "success":
+        (
+          "color": #3bb346,
+          "color-hover": #30953b,
+          "color-active": #25772f,
+          "color-disabled": #a4e0a7,
+        ),
+      // 警示
+      "warning":
+        (
+          "color": #fc8800,
+          "color-hover": #d26700,
+          "color-active": #a84a00,
+          "color-disabled": #fff8ea,
+        ),
+      //危险
+      "danger":
+        (
+          "color": #f93920,
+          "color-hover": #d52515,
+          "color-active": #b2140c,
+          "color-disabled": #fef2ed,
+        ),
+      // 链接
+      "link":
+        (
+          "color": #0064fa,
+          "color-hover": #0062d6,
+          "color-active": #004fb3,
+          "color-visited": #0064fa,
+        ),
+      // 阴影
+      "shadow":
+        (
+          "elevated": $elevated-default,
+        ),
+      //边框颜色
+      "border":
+        (
+          "color": rgba(var(--semi-grey-9), 0.08),
+        ),
+    ),
+    "dark": (
+      "foreground": #f9f9f9,
+      "background": #16161a,
+      //主要颜色
+      "primary":
+        (
+          "color": #54a9ff,
+          "color-hover": #7fc1ff,
+          "color-active": #a9d7ff,
+          "color-disabled": #135cb8,
+        ),
+      //次要颜色
+      "secondary":
+        (
+          "color": #40b4f3,
+          "color-hover": #6ec8f6,
+          "color-active": #9ddcf9,
+          "color-disabled": #0366a9,
+        ),
+      //第三方颜色
+      "tertiary":
+        (
+          "color": #888d92,
+          "color-hover": #a7abb0,
+          "color-active": #c6cacd,
+          "color-disabled": #2d2e32,
+        ),
+      //信息
+      "info":
+        (
+          "color": #54a9ff,
+          "color-hover": #7fc1ff,
+          "color-active": #a9d7ff,
+          "color-disabled": #135cb8,
+        ),
+      //成功
+      "success":
+        (
+          "color": #5dc264,
+          "color-hover": #7fd184,
+          "color-active": #a6e1a8,
+          "color-disabled": #277731,
+        ),
+      //警示
+      "warning":
+        (
+          "color": #ffae43,
+          "color-hover": #ffc772,
+          "color-active": #ffdda1,
+          "color-disabled": #453522,
+        ),
+      //危险
+      "danger":
+        (
+          "color": #fc725a,
+          "color-hover": #fd9983,
+          "color-active": #fdbeac,
+          "color-disabled": #442927,
+        ),
+      //链接
+      "link":
+        (
+          "color": #54a9ff,
+          "color-hover": #7fc1ff,
+          "color-active": #a9d7ff,
+          "color-visited": #54a9ff,
+        ),
+      //阴影
+      "shadow":
+        (
+          "elevated": $elevated-dark,
+        ),
+      //边框颜色
+      "border":
+        (
+          "color": rgba(var(--semi-grey-9), 0.08),
+        ),
+    ),
+    "public": (
+      //字体大小
+      "font-size":
+        (
+          "small": $fontSize,
+          "regular": $fontSize + 2,
+          "header-6": $fontSize + 4,
+          "header-5": $fontSize + 6,
+          "header-4": $fontSize + 8,
+          "header-3": $fontSize + 12,
+          "header-2": $fontSize + 16,
+          "header-1": $fontSize + 20
+        ),
+      //字体加粗
+      "font-weight":
+        (
+          "light": $weight,
+          "light-regular": $weight * 2,
+          "light-bold": $weight * 3
+        ),
+      //圆角
+      "border-radius":
+        (
+          "small": $borderRadius,
+          "medium": $borderRadius * 2,
+          "large": $borderRadius * 4,
+          "circle": 50%,
+          "full": 9999px
+        ),
+      //尺寸
+      "height-control":
+        (
+          "small": $height-control,
+          "default": $height-control + 8,
+          "large": $height-control + 16
+        ),
+      //图标尺寸
+      "width-icon":
+        (
+          "extra-small": $width-icon,
+          "small": $width-icon + 4px,
+          "medium": $width-icon * 2,
+          "large": $width-icon + 12,
+          "extra-large": $width-icon * 3
+        ),
+      //间距
+      "spacing":
+        (
+          "none": 0,
+          "super-tight": $spacing,
+          "extra-tight": $spacing * 2,
+          "tight": $spacing * 4,
+          "base-tight": $spacing * 6,
+          "base": $spacing * 8,
+          "base-loose": $spacing * 10,
+          "loose": $spacing * 12,
+          "extra-loose": $spacing * 16,
+          "super-loose": $spacing * 20
+        ),
+      //层级
+      "z":
+        (
+          "1": 1,
+          "10": 10,
+          "101": 101,
+          "1000": 1000,
+          "1010": 1010,
+          "1030": 1030
+        ),
+    ),
+  )
+);
+
+@use "global";
+@use "button";

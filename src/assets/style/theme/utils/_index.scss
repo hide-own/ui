@@ -1,0 +1,35 @@
+@use "sass:map";
+@use "sass:list";
+@use "extended/map" as emap;
+@use "extended/list" as elist;
+@use "extended/string" as estr;
+
+/// 扁平化主题对象
+@function flatten-themes($themes, $separator) {
+  $flatten: ();
+
+  @each $theme, $properties in $themes {
+    $flatten: map.merge(
+      $flatten,
+      (
+        $theme: emap.flatten($properties, $separator),
+      )
+    );
+  }
+  @return $flatten;
+}
+
+/// 将属性转换为CSS自定义属性访问器。
+///
+/// @param {String} $property - Property to transform
+/// @param $fallback - CSS var() fallback value
+///
+/// @return {String}
+
+@function accessor($property, $fallback, $prefix) {
+  @if ($fallback) {
+    @return var(--#{$prefix}#{$property}, $fallback);
+  } @else {
+    @return var(--#{$prefix}#{$property});
+  }
+}

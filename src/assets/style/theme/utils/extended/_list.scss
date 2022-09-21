@@ -1,0 +1,15 @@
+@use "sass:list";
+
+/// 验证列表中是否存在某项
+///
+/// @param {List} $list 用于验证的列表
+/// @param {*} $element 被用于验证的成员
+///
+/// @return {Boolean} 如果存在返回 true，反之返回 false
+@function has($list, $element) {
+  @if (list.index($list, $element) == null) {
+    @return false;
+  } @else {
+    @return true;
+  }
+}

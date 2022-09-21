@@ -1,0 +1,37 @@
+@use "sass:map";
+
+/// 扁平化深度嵌套的Map对象。
+///
+/// @example
+/// ```sass
+/// flatten(("first": "content-first", "second": ("first": "content-second-first")))
+/// => ("first": "content-first", "second--first": "content-second-first")
+/// ```
+///
+/// @param {Map} $map 被操作的Map对象
+/// @param {String} $separator 键名连接符
+/// @param {String} $_parent-key 仅用于递归。
+@function flatten($map, $separator: "-", $_parent-key: "") {
+  $scope: ();
+
+  @each $key, $value in $map {
+    @if ($_parent-key != "") {
+      $key: $_parent-key + $separator + $key;
+    }
+    @if (type-of($value) == map) {
+      $scope: map.merge($scope, flatten($value, $separator, $key));
+    } @else {
+      @if (map.has-key($scope, $key)) {
+        @error "Duplicate key #{$key}.";
+      } @else {
+        $scope: map.merge(
+          $scope,
+          (
+            $key: $value,
+          )
+        );
+      }
+    }
+  }
+  @return $scope;
+}

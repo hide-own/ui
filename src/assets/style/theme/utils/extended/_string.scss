@@ -1,0 +1,19 @@
+@use "sass:string";
+
+/// 用字符串 `$replace` 替换字符串 `$string` 中的 `$search`
+///
+/// @param {String} $string 被操作的字符串
+/// @param {String} $search 被替换的字符串
+/// @param {String} $replace 用于替换的字符串
+///
+/// @return {String} 返回被替换后的字符串
+@function replace($string, $search, $replace: "") {
+  $index: string.index($string, $search);
+
+  @if $index {
+    $done: string.slice($string, 1, $index - 1);
+    $next: string.slice($string, $index + string.length($search));
+    @return $done + $replace + replace($next, $search, $replace);
+  }
+  @return $string;
+}

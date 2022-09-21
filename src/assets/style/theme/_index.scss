@@ -1,0 +1,99 @@
+@use "sass:map";
+@use "sass:meta";
+@use "utils/extended/list" as elist;
+@use "utils/extended/string" as estring;
+@use "utils" as f;
+
+/// List of themes.
+///
+/// At least one theme named by 'default'.
+///
+/// @type Map
+/// @prop {Map} default - REQUIRED! default theme.
+$themes: () !default;
+
+/// CSS Custom Properties Prefix.
+///
+/// @type String
+$prefix: "st-" !default;
+/// Separator for nested properties.
+///
+/// @type String
+$separator: "-" !default;
+
+// It throws an error if $themes don't have the 'default' theme.
+@if (map.has-key($themes, "default") == false) {
+  @error "Themes must have at least one theme with the name 'default'.";
+}
+
+// Flatten themes.
+$_themes-flatten: f.flatten-themes($themes, $separator);
+
+// Available properties.
+$_properties: map.keys(map.get($_themes-flatten, "default"));
+
+// For development and testing.
+$_is-development: false !default;
+
+/// Get custom property.
+///
+/// @param {String} $property - Property name.
+/// @param {String | List | Number} $fallback [false] - Fallback value for property.
+///
+/// @returns {String} var(--property-name, additional fallback)
+@function get($property, $fallback: false) {
+  $replaced: estring.replace($property, ".", $separator);
+
+  @if elist.has($_properties, $replaced) {
+    @return f.accessor($replaced, $fallback, $prefix);
+  } @else {
+    @return _warn("The '#{$property}' property doesn't exist in the theme.");
+  }
+}
+
+/// Get all custom properties of a specific theme.
+///
+/// @param {String} $theme - Theme name.
+///
+/// @content List of all custom properties.
+@mixin get-all($theme) {
+  @if (map.has-key($_themes-flatten, $theme)) {
+    @each $property, $value in map.get($_themes-flatten, $theme) {
+      $inspect: meta.inspect($value);
+      --#{$prefix}#{$property}: #{$inspect};
+    }
+  } @else {
+    @include _warn("The '#{$theme}' theme is not found.");
+  }
+}
+
+/// Override custom property at the specific scope.
+///
+/// @param {String} $property - Property name.
+/// @param {String | List | Number} $value - Property value.
+///
+/// @content Custom property notation.
+@mixin set($property, $value) {
+  @if (elist.has($_properties, $property)) {
+    $inspect: meta.inspect($value);
+    --#{$prefix}#{$property}: #{$inspect};
+  } @else {
+    @include _warn("The '#{$separator}' property doesn't exist in the theme.");
+  }
+}
+
+@mixin _warn($message, $override: $_is-development) {
+  @if ($override) {
+    content: $message;
+  } @else {
+    @warn $message;
+  }
+}
+
+@function _warn($message, $override: $_is-development) {
+  @if ($override) {
+    @return "#{$message}";
+  }
+  @warn $message;
+  @return null;
+}
